@@ -11,7 +11,14 @@
  }
  
  const server = http.createServer((peticion, respuesta) => {
-     // completar con la logica requerida
+     let producto = {
+         id: obtenerRandom(1,10),
+         title: "Producto " + obtenerRandom(1, 10 ),   
+         price: obtenerRandom(0.00, 9999.99 ),
+         thumbnail: obtenerRandom(1,10)
+     }
+
+     respuesta.end(JSON.stringify(producto))
  });
  
  server.listen(3000, function () {

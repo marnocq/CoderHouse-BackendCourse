@@ -16,7 +16,8 @@ class Archivo{
         }                
     }
 
-   async guardar(producto){        
+   async guardar(producto){
+       // Si antes nos se ejecuta el metodo leer se esta sobrescribiendo el archivo.
         try{
             const produ = JSON.parse(producto)
             produ.id = this.productos.length +1             
@@ -31,6 +32,7 @@ class Archivo{
     }
 
     borrar(){
+        // Usar promesas con async/await y manejo de errores con try/catch
         fs.unlink(this.nombre, error => {
             if(error){
                 console.log('Ocurrio un error al intentar borrar el archivo')
@@ -43,6 +45,7 @@ class Archivo{
     
 }
 
+// Aca es donde tenes que user el __dirname. Eso te va a cargar la ruta absoluta hasta la carpeta donde se encuentre este archivo
 let ar = new Archivo("/Users/noc/CODERHOUSE/Code/06/productos.txt")
 
 // ar.leer()

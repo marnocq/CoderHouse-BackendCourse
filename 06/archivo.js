@@ -17,7 +17,8 @@ class Archivo{
         }                
     }
 
-   async guardar(producto){        
+   async guardar(producto){
+       // Si antes nos se ejecuta el metodo leer se esta sobrescribiendo el archivo.
         try{
             const contenido = await fs.promises.readFile(this.nombre, 'utf-8')
             if(contenido){                                                              

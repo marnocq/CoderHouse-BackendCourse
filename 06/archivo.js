@@ -21,7 +21,7 @@ class Archivo{
        // Si antes nos se ejecuta el metodo leer se esta sobrescribiendo el archivo.
         try{
             const contenido = await fs.promises.readFile(this.nombre, 'utf-8')
-            if(contenido){                                                              
+            if(this.productos.length == 0){
                 this.productos.push(JSON.parse(contenido))                
                 this.productos = this.productos.flat()               
             }            

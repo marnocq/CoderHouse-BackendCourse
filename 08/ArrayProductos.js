@@ -1,4 +1,5 @@
 const express = require('express')
+const bodyParser = require("body-parser")
 
 const app = express() 
 
@@ -6,22 +7,31 @@ const puerto = 8080
 
 const productos = []
 const routerProductos = express.Router()
+app.use(bodyParser.json())
 
 // GET
-routerProductos.get('/api/productos', (req, res) => {
-    res.status(404).send(productos)
+routerProductos.get('/', (req, res) => {
+    if(productos.length == 0){
+        res.status(404).send({error:'no hay productos cargados'})
+    }else{
+        res.send(productos)
+    }        
 })
 
-routerProductos.get('/spi/productos/:id', (req, res) => {
+routerProductos.get('/:id', (req, res) => {
     const producto = productos.filter((producto) => producto.id == req.params.id)
-    res.status(404).send(producto)
+    if(producto.length == 0){
+        res.status(404).send({error:'producto no encontrado'})
+    }else{
+        res.send(producto)    
+    }    
 })
 
 //POST
-routerProductos.post('/api/productos', (req, res) => {
+routerProductos.post('/', (req, res) => {
     console.table(req.body)
     const newProducto = req.body
-    newProducto.id = productos.length
+    newProducto.id = productos.length + 1 
     productos.push(newProducto)
     res.send(newProducto)
 })

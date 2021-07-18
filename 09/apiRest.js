@@ -1,49 +1,63 @@
 const express = require('express')
+const bodyParser = require("body-parser")
 
 const app = express() 
 
 const puerto = 8080
 
-const productos = []
+app.use('/', express.static(__dirname + '/public'))
+
+let productos = []
 const routerProductos = express.Router()
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded())
 
 // GET
-routerProductos.get('/api/productos', (req, res) => {
-    res.status(404).send(productos)
+routerProductos.get('/', (req, res) => {
+    if(productos.length == 0){
+        res.status(404).send({error:'no hay productos cargados'})
+    }else{
+        res.send(productos)
+    }        
 })
 
-routerProductos.get('/api/productos/:id', (req, res) => {
+routerProductos.get('/:id', (req, res) => {
     const producto = productos.filter((producto) => producto.id == req.params.id)
-    res.status(404).send(producto)
+    if(producto.length == 0){
+        res.status(404).send({error:'producto no encontrado'})
+    }else{
+        res.send(producto)    
+    }    
 })
 
 //POST
-routerProductos.post('/api/productos', (req, res) => {
+routerProductos.post('/', (req, res) => {
     console.table(req.body)
     const newProducto = req.body
-    newProducto.id = productos.length
+    newProducto.id = productos.length +1
     productos.push(newProducto)
     res.send(newProducto)
 })
 
 //PUT
-routerProductos.put('/api/productos/:id', (req, res) => {
-    const productoAct = productos.filter((producto) => producto.id == req.params.id)
+routerProductos.put('/actualiza/:id', (req, res) => {   
     for (let i=0; i < productos.length; i++) {
         console.log(`for ${i}`)
         if (productos[i].id == req.params.id) {
             console.log(req.body)
             productos[i] = req.body
+            productos[i].id = req.params.id
             console.log(productos)
+            var productoAct = productos[i]
         }
     }
     res.send(productoAct)
 })
 
 //DELETE
-routerProductos.delete('/api/productos/:id', (req, res) => {
-    productos = productos.filter((producto) => producto.id != req.params.id)
+routerProductos.delete('/borra/:id', (req, res) => {
     const productoDel = productos.filter((producto) => producto.id == req.params.id)
+    productos = productos.filter((producto) => producto.id != req.params.id)    
     res.send(productoDel)
 })
 

@@ -6,7 +6,8 @@ html
   body
     .container
       .row
-        .span5                                                
+        .span5
+        if productos.length                                                
           table.table.table-striped.table-condensed
             thead
               tr
@@ -22,3 +23,5 @@ html
                         td= val.price
                         td
                             img(width='16px' src=val.thumbnail)
+        else 
+          h3 No hay productos disponibles

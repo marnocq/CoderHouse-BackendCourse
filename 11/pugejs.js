@@ -14,8 +14,7 @@ const puerto = 8080
 
 //app.use('/', express.static(__dirname + '/public'))
 
-let productos = [{title:"Bandera1", price:"100", thumbnail:"https://cdn4.iconfinder.com/data/icons/world-flags-12/512/Untitled-2-10-256.png", id:1},
-                {title:"Bandera2", price:"200", thumbnail:"https://cdn4.iconfinder.com/data/icons/world-flags-12/512/Untitled-2-05-256.png", id:2}]
+let productos = []
 const routerProductos = express.Router()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded())

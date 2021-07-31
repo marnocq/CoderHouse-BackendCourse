@@ -1,20 +1,32 @@
-import http from 'http';
+// Libraries
+import express from 'express';
+import bodyParser from 'body-parser';
 import path from 'path';
+import handlebars from 'express-handlebars';
+import http from 'http';
 import {Server} from 'socket.io';
 
-const express = require('express')
-const bodyParser = require("body-parser")
-const exphbs = require('express-handlebars')
-
-const app = express() 
-
+const app = express();
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 const server = http.createServer(app);
 const io = new Server(server);
 
-app.engine('handlebars', exphbs())
-app.set('view engine', 'handlebars')
+app.engine("handlebars", handlebars({
+    extname: 'handlebars',
+    partialsDir: `${path.resolve()}/views/`,
+}));
 
-const puerto = 8080
+app.set('view engine', 'handlebars');
+app.set('views', './views/');
+
+const puerto = process.env.PORT || 8000;
+
+server.listen(puerto, () => {
+    console.log(`Servidor iniciado en el puerto: ${server.address().port}`);
+});
+server.on('error', error => console.log(`Error al iniciar el servidor: ${error}`));
+
 
 //app.use('/', express.static(__dirname + '/public'))
 
@@ -26,58 +38,62 @@ app.use(bodyParser.urlencoded())
 
 // GET
 routerProductos.get('/home', (req, res) => {    
-        res.render('home')    
+        res.render('home', {productos: productos})    
 })
-routerProductos.get('/productos', (req, res) => {
-    res.render('tablaProductos', {productos: productos})
-})
+// routerProductos.get('/productos', (req, res) => {
+//     res.render('tablaProductos', {productos: productos})
+// })
 
-routerProductos.get('/productos/:id', (req, res) => {
-    const producto = productos.filter((producto) => producto.id == req.params.id)
-    if(producto.length == 0){
-        res.status(404).send({error:'producto no encontrado'})
-    }else{
-        res.send(producto)    
-    }    
-})
+// routerProductos.get('/productos/:id', (req, res) => {
+//     const producto = productos.filter((producto) => producto.id == req.params.id)
+//     if(producto.length == 0){
+//         res.status(404).send({error:'producto no encontrado'})
+//     }else{
+//         res.send(producto)    
+//     }    
+// })
 
 //POST
 routerProductos.post('/productos', (req, res) => {
     console.table(req.body)
     const newProducto = req.body
     newProducto.id = productos.length +1
-    productos.push(newProducto)
-    res.render('home')
+    productos.push(newProducto)    
+    io.emit('new-product', newProducto);
+    //res.render('home',{productos: productos})
+    res.send('succes');
 })
 
-//PUT
-routerProductos.put('/productos/actualiza/:id', (req, res) => {   
-    for (let i=0; i < productos.length; i++) {
-        console.log(`for ${i}`)
-        if (productos[i].id == req.params.id) {
-            console.log(req.body)
-            productos[i] = req.body
-            productos[i].id = req.params.id
-            console.log(productos)
-            var productoAct = productos[i]
-        }
-    }
-    res.send(productoAct)
-})
+// io.on('connection', (socket) => {
+//     /* Recibimos en el back */
+//     socket.on('msg-new', (data) => {
+//         console.log(data);
+//     });
+// });
 
-//DELETE
-routerProductos.delete('/productos/borra/:id', (req, res) => {
-    const productoDel = productos.filter((producto) => producto.id == req.params.id)
-    productos = productos.filter((producto) => producto.id != req.params.id)    
-    res.send(productoDel)
-})
+// //PUT
+// routerProductos.put('/productos/actualiza/:id', (req, res) => {   
+//     for (let i=0; i < productos.length; i++) {
+//         console.log(`for ${i}`)
+//         if (productos[i].id == req.params.id) {
+//             console.log(req.body)
+//             productos[i] = req.body
+//             productos[i].id = req.params.id
+//             console.log(productos)
+//             var productoAct = productos[i]
+//         }
+//     }
+//     res.send(productoAct)
+// })
+
+// //DELETE
+// routerProductos.delete('/productos/borra/:id', (req, res) => {
+//     const productoDel = productos.filter((producto) => producto.id == req.params.id)
+//     productos = productos.filter((producto) => producto.id != req.params.id)    
+//     res.send(productoDel)
+// })
 
 
 app.use('/api/', routerProductos)
 
-//Con
-const server = app.listen(puerto, () => {
-    console.log(`Servidor inicializado en el puerto ${server.address().port}`)
-})
-//err
-server.on("error", error => console.log(`Error en servidor ${error}`))
+

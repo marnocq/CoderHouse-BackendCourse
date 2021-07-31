@@ -12,7 +12,7 @@
                             <th>Thumbnail</th>                        
                         </tr>
                     </thead>   
-                    <tbody>
+                    <tbody id="products">
                         {{#each productos}}
                         <tr>
                             <td>{{this.id}}</td>
@@ -29,4 +29,19 @@
             <h3>No hay productos dispobibles</h3>
         {{/if}}    
     </div>
+    <script type="application/javascript" src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+            socket.on('new-product', data => {
+                let tbody = document.getElementById('products');
+                tbody.insertRow().innerHTML = `
+                    <td>${data.id}</td>
+                    <td>${data.title}</td>
+                    <td>$${data.price}</td>
+                    <td>
+                        <img src="${data.thumbnail}" width="16px"/>
+                    </td>
+                `
+        });
+    </script>
 </html>

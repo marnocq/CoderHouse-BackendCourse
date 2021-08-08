@@ -52,7 +52,7 @@ app.use(bodyParser.urlencoded())
 
 // GET
 routerProductos.get('/home', (req, res) => {    
-        res.render('home', {productos: productos})    
+        res.render('home', {productos: productos, chat: mensajes})    
 })
 // routerProductos.get('/productos', (req, res) => {
 //     res.render('tablaProductos', {productos: productos})

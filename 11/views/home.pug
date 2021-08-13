@@ -1,0 +1,18 @@
+html
+  head
+    link#bootstrap-css(href='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css' rel='stylesheet')
+    script(src='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js')
+  body
+    .container
+      .row
+        .col-2
+          .span.text-center
+            form(action='/api/productos' method='post' style='margin-top: 10px; margin: 50% auto')
+              .controls.controls-row
+                input#title.span3(name='title' type='text' placeholder='Titulo')
+              .controls.controls-row
+                input#price.span3(name='price' type='text' placeholder='Price')
+              .controls.controls-row
+                input#thumbnail.span3(name='thumbnail' type='text' placeholder='Thumbnail')
+              .controls
+                button.btn.btn-primary.input-medium.pull-right(type='submit') Enviar

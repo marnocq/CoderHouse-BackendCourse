@@ -1,0 +1,8 @@
+Personalmente creo que la seleccion del motor de plantillas depende mucho del 
+proyecto en el cual se vaya a trabajar. Cada uno de los tres vistos en estas clases
+tienen sus pro y sus contras.
+Personalmente creo que las plantillas pug tienen una sintaxys mas clara y limpia y en general
+resultan tambien ser menos lineas de codigo. Si bien es la mas diferente de las tres una vez que se
+aprende la sintaxys se hace bastante simple.
+Por otro lado la posibilidad de usar parcials con ejs resulta de gran relevancia en el caso de tener 
+un proyecto de mayor tamaño en el cual la reutilizacion de codigo pueda ser vital.

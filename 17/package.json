@@ -3,13 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon ./chatDB",
     "dev": "nodemon ./src",
     "migrate": "node ./database/migracion",
-    "drop": "node ./database/drop"    
+    "drop": "node ./database/drop"
   },
   "engines": {
     "node": ">=14.0.0",
@@ -19,7 +18,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "express-handlebars": "^5.3.2",
+    "express-handlebars": "^5.3.3",
     "handlebars": "^4.7.7",
     "knex": "^0.95.10",
     "morgan": "^1.10.0",

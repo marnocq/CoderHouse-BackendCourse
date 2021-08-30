@@ -1,4 +1,4 @@
-const knex = require('../database/knex');
+const knex = require('../database/knexSqlite');
 
 knex.schema.createTable('mensajes', table => {
     table.increments('id');

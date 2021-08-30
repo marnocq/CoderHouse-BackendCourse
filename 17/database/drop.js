@@ -1,3 +1,3 @@
-const knex = require('../database/knex');
+const knex = require('./knexSqlite');
 
 knex.schema.dropTable('mensajes');

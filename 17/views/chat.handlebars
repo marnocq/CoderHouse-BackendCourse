@@ -18,16 +18,16 @@
         </div>
     </div>
 </div>
-
-<script>
-    var socket = io();
+<script type="application/javascript" src="http://localhost:8000/socket.io/socket.io.js"></script>
+<script>    
+    var socket = io.connect();
     socket.on('new-msg', data => {
         let div_chat = document.getElementById('div-chat');
         div_chat.innerHTML += `<span class="badge badge-primary">${ data.email } [ ${data.fecha} ]:</span> ${ data.msg }<br>`;
     });
     async function sendMsg(){
         if(document.getElementById('email').value != '' && document.getElementById('msg').value != ''){
-            const respose = await fetch('/api/chat/', {
+            const respose = await fetch('/api/chat', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

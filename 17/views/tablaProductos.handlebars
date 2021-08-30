@@ -29,9 +29,9 @@
             <h3>No hay productos dispobibles</h3>
         {{/if}}    
     </div>
-    <script type="application/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="application/javascript" src="http://localhost:8000/socket.io/socket.io.js"></script>
     <script>
-        var socket = io();
+        var socket = io.connect();
             socket.on('new-product', data => {
                 let tbody = document.getElementById('products');
                 tbody.insertRow().innerHTML = `

@@ -1,11 +1,15 @@
 {
-  "name": "07",
+  "name": "17_persistencia_database",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
+  
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./chatDB",
+    "dev": "nodemon ./src",
+    "migrate": "node ./database/migracion",
+    "drop": "node ./database/drop"    
   },
   "engines": {
     "node": ">=14.0.0",
@@ -18,6 +22,7 @@
     "express-handlebars": "^5.3.2",
     "handlebars": "^4.7.7",
     "knex": "^0.95.10",
+    "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.12",
     "socket.io": "^4.1.3",
